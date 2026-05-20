@@ -1,0 +1,55 @@
+# =========================
+# GENERAL
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VSCODE
+# =========================
+.vscode/
+
+# =========================
+# SPRING BOOT / MAVEN
+# =========================
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+
+# Maven
+.mvn/timing.properties
+
+# IntelliJ
+.idea/
+*.iml
+
+# =========================
+# ANGULAR / NODE
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# ENV FILES
+# =========================
+.env
+.env.local
+
+# =========================
+# OS FILES
+# =========================
+Desktop.ini
+
+# =========================
+# SCREENSHOTS TEMP FILES
+# =========================
+*.tmp

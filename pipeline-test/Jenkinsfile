@@ -6,17 +6,20 @@ pipeline {
     }
 
     stages {
-
         stage('Compilation') {
             steps {
-                sh 'mvn clean compile'
+                dir('pipeline-test') {
+                    sh 'mvn clean compile'
+                }
             }
         }
 
         stage('Analyse SonarQube') {
             steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=mon-pipeline-test -Dsonar.host.url=http://sonarqube:9000'
+                dir('pipeline-test') {
+                    withSonarQubeEnv('sonar-server') {
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=mon-pipeline-test'
+                    }
                 }
             }
         }
@@ -29,9 +32,10 @@ pipeline {
 
         stage('Publication Nexus') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-
-                    sh 'mvn deploy -DaltDeploymentRepository=nexus::default::http://${NEXUS_USER}:${NEXUS_PASS}@nexus:8081/repository/maven-releases/'
+                dir('pipeline-test') {
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                        sh 'mvn deploy -DaltDeploymentRepository=nexus::default::http://${NEXUS_USER}:${NEXUS_PASS}@nexus:8081/repository/maven-releases/'
+                    }
                 }
             }
         }

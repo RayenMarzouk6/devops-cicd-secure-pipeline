@@ -2,105 +2,59 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
-        jdk 'JDK21'
-        nodejs 'Node18'
-    }
-
-    environment {
-        BACKEND_DIR = 'backend'
-        FRONTEND_DIR = 'frontend'
+        maven 'Default'
     }
 
     stages {
-
-        stage('Backend - Build') {
+        stage('Checkout') {
             steps {
-                dir("${BACKEND_DIR}") {
-                    sh 'mvn clean compile'
+                checkout scm
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('backend') {
+                    sh 'mvn clean package'
                 }
             }
         }
 
-        stage('Backend - Test') {
+        stage('SonarQube Backend') {
             steps {
-                dir("${BACKEND_DIR}") {
-                    sh 'mvn test'
-                }
-            }
-        }
-
-        stage('Backend - SonarQube') {
-            steps {
-                dir("${BACKEND_DIR}") {
-                    withSonarQubeEnv('SonarQube') {
-                        sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=backend_project
-                        '''
+                dir('backend') {
+                    withSonarQubeEnv('sonar-server') {
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=calculator-backend'
                     }
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    sh '''
+                    npm install
+                    npm run build
+                    '''
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                waitForQualityGate abortPipeline: true
+            }
+        }
+
+        stage('Publish Backend to Nexus') {
+            steps {
+                dir('backend') {
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                        sh 'mvn deploy -DaltDeploymentRepository=nexus::default::http://${NEXUS_USER}:${NEXUS_PASS}@nexus:8081/repository/maven-releases/'
+                    }
                 }
             }
-        }
-
-        stage('Backend - Package') {
-            steps {
-                dir("${BACKEND_DIR}") {
-                    sh 'mvn package -DskipTests'
-                }
-            }
-        }
-
-        stage('Backend - Deploy to Nexus') {
-            steps {
-                dir("${BACKEND_DIR}") {
-                    sh 'mvn deploy -DskipTests'
-                }
-            }
-        }
-
-        stage('Frontend - Install Dependencies') {
-            steps {
-                dir("${FRONTEND_DIR}") {
-                    sh 'npm ci'
-                }
-            }
-        }
-
-        stage('Frontend - Build') {
-            steps {
-                dir("${FRONTEND_DIR}") {
-                    sh 'npm run build'
-                }
-            }
-        }
-
-        stage('Pipeline Success') {
-            steps {
-                echo 'Build successful 🚀'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo '✅ CI/CD completed successfully'
-        }
-
-        failure {
-            echo '❌ Pipeline failed'
-        }
-
-        always {
-            cleanWs()
         }
     }
 }

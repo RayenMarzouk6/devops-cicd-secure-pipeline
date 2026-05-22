@@ -57,7 +57,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to Nexus') {
+        stage('Deploy to Nexus (SNAPSHOT FIXED)') {
             steps {
                 dir('backend') {
                     withCredentials([usernamePassword(
@@ -70,7 +70,7 @@ pipeline {
                             mvn deploy \
                             -DskipTests \
                             -Dmaven.repo.local=.m2 \
-                            -DaltDeploymentRepository=nexus::default::http://${NEXUS_USER}:${NEXUS_PASS}@nexus:8081/repository/maven-releases/
+                            -DaltDeploymentRepository=nexus::default::http://${NEXUS_USER}:${NEXUS_PASS}@nexus:8081/repository/maven-snapshots/
                         '''
                     }
                 }

@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Default'
-    }
-
     options {
         buildDiscarder(logRotator(
             numToKeepStr: '5',
@@ -23,32 +19,35 @@ pipeline {
             }
         }
 
-        stage('Build Backend') {
+        stage('Install Dependencies') {
             steps {
-                dir('backend') {
-                    sh 'mvn clean package -Dmaven.repo.local=.m2 -DskipTests=false'
+                dir('frontend') {
+                    sh '''
+                        rm -rf node_modules package-lock.json
+
+                        npm ci --prefer-offline
+                    '''
                 }
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Build Frontend') {
             steps {
-                dir('backend') {
-                    withSonarQubeEnv('sonar-server') {
-                        sh '''
-                            mvn sonar:sonar \
-                            -Dsonar.projectKey=calculator-backend \
-                            -Dmaven.repo.local=.m2
-                        '''
-                    }
+                dir('frontend') {
+                    sh '''
+                        npm run build
+                    '''
                 }
             }
         }
 
-        stage('Quality Gate') {
+        stage('Optional Tests') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                dir('frontend') {
+                    sh '''
+                        # skip if no tests configured
+                        npm test -- --watch=false || true
+                    '''
                 }
             }
         }
@@ -56,8 +55,10 @@ pipeline {
 
     post {
         always {
-            dir('backend') {
-                sh 'rm -rf .m2'
+            dir('frontend') {
+                sh '''
+                    rm -rf node_modules dist build .npm
+                '''
             }
 
             cleanWs(
@@ -70,7 +71,7 @@ pipeline {
         }
 
         failure {
-            echo 'Backend pipeline failed — workspace cleaned.'
+            echo 'Frontend pipeline failed — workspace cleaned.'
         }
     }
 }

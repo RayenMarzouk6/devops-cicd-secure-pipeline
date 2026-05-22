@@ -26,7 +26,11 @@ pipeline {
         stage('Build Backend') {
             steps {
                 dir('backend') {
-                    sh 'mvn clean package -Dmaven.repo.local=.m2 -DskipTests=false'
+                    sh '''
+                        mvn clean package \
+                        -Dmaven.repo.local=.m2 \
+                        -DskipTests=false
+                    '''
                 }
             }
         }
@@ -52,6 +56,26 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Nexus') {
+            steps {
+                dir('backend') {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'nexus-credentials',
+                        usernameVariable: 'NEXUS_USER',
+                        passwordVariable: 'NEXUS_PASS'
+                    )]) {
+
+                        sh '''
+                            mvn deploy \
+                            -DskipTests \
+                            -Dmaven.repo.local=.m2 \
+                            -DaltDeploymentRepository=nexus::default::http://${NEXUS_USER}:${NEXUS_PASS}@nexus:8081/repository/maven-releases/
+                        '''
+                    }
+                }
+            }
+        }
     }
 
     post {
@@ -70,7 +94,7 @@ pipeline {
         }
 
         failure {
-            echo 'Backend pipeline failed — workspace cleaned.'
+            echo 'Pipeline failed — workspace cleaned.'
         }
     }
 }

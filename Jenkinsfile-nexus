@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Default'
+    }
+
+    stages {
+
+        stage('Build Backend') {
+            steps {
+                dir('backend') {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+
+        stage('Deploy To Nexus') {
+            steps {
+                dir('backend') {
+                    sh 'mvn deploy'
+                }
+            }
+        }
+    }
+}

@@ -57,11 +57,16 @@
 
 
 <distributionManagement>
-    <repository>   
-        <id>nexus</id>
-        <!-- <url>http://localhost:8081/repository/maven-releases/</url> -->
-		<url>http://nexus:8081/repository/maven-releases/</url>
 
+    <repository>
+        <id>nexus</id>
+        <url>http://10.0.2.15:8081/repository/maven-releases/</url>
     </repository>
+
+    <snapshotRepository>
+        <id>nexus</id>
+        <url>http://10.0.2.15:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+
 </distributionManagement>
 </project>

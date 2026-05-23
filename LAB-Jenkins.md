@@ -147,9 +147,9 @@ pipeline {
 ## 8. Affichage du résultat dans le tableau de bord Jenkins
 Après avoir cliqué sur "Build Now", le tableau de bord de Jenkins (Stage View) affiche l'exécution séquentielle de chaque étape (Checkout, Build, SonarQube, Quality Gate, Deploy), toutes au vert si l'opération est réussie.
 
-![Résultat du Pipeline](./docs/sreenshots/j15.png)
-![Résultat du Pipeline](./docs/sreenshots/j16.png)
+![Résultat du Pipeline](./docs/screenshots/j15.png)
+![Résultat du Pipeline](./docs/screenshots/j16.png)
 
 ## 9. Affichage du résultat dans le tableau de bord SonarQube
 
-![Résultat du Pipeline](./docs/sreenshots/j17.png)
+![Résultat du Pipeline](./docs/screenshots/j17.png)

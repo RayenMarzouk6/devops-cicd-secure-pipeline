@@ -32,7 +32,7 @@ sonatype/nexus3
 ```
 ### Capture — Container Nexus:
 
-<img width="1605" height="152" alt="image" src="https://github.com/user-attachments/assets/1e0f1d94-9412-4e79-9e49-e1aacddc82de" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/1.png)
 
 # 2. Accès à Nexus
 
@@ -48,20 +48,19 @@ docker exec nexus cat /nexus-data/admin.password
 ```
 
 ### Capture — Interface Nexus
-
-<img width="1855" height="909" alt="Capture d&#39;écran 2026-05-15 095951" src="https://github.com/user-attachments/assets/baccd547-94fe-44f1-ad96-7867a2c45b2f" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/2.png)
 
 # 3. Création du Repository Maven
 
 J’ai créé un repository Maven de type :
 
 **maven2 (hosted)**
-<img width="1576" height="468" alt="Capture d&#39;écran 2026-05-15 230038" src="https://github.com/user-attachments/assets/066bf154-02b0-450a-a4b5-f09eb47a6c26" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/3.png)
 
 Nom du repository :
 
 **maven-project-repo**
-<img width="1573" height="473" alt="Capture d’écran 2026-05-15 230449" src="https://github.com/user-attachments/assets/e8f37fa9-02de-4b04-9c87-3a1984def8f2" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/4.png)
 
 Configuration choisie :
 | Paramètre | Valeur |
@@ -72,7 +71,7 @@ Configuration choisie :
 Cette configuration permet de stocker les versions de développement (SNAPSHOT).
 
 ### Capture — Configuration du Repository
-<img width="1569" height="814" alt="Capture d’écran 2026-05-15 231339" src="https://github.com/user-attachments/assets/6d6d2afe-fdf4-4793-8970-d4493176122a" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/5.png)
 
 # 4. Génération du projet Spring Boot
 
@@ -81,22 +80,22 @@ Pour créer le projet Java Maven, j’ai utilisé le site :
 https://start.spring.io/
 
 ### Configuration choisie :
-<img width="1098" height="772" alt="image" src="https://github.com/user-attachments/assets/821690bf-1551-4964-9f73-33e7ecefef0f" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/6.png)
 
 ### Compilation du projet :
 ```bash
 mvn clean package
 ```
-<img width="1315" height="596" alt="Capture d&#39;écran 2026-05-15 115512" src="https://github.com/user-attachments/assets/46621f4f-8a9a-4500-8de7-9d24e24c0e45" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/7.png)
 
 ###  Capture — BUILD SUCCESS
 
-<img width="1319" height="246" alt="Capture d&#39;écran 2026-05-15 115441" src="https://github.com/user-attachments/assets/b84a6b10-0423-4882-a666-2025d8950fd0" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/8.png)
 
 Résultat obtenu :
 
 ### target/*.jar
-<img width="1141" height="176" alt="Capture d&#39;écran 2026-05-15 115656" src="https://github.com/user-attachments/assets/3877ca9f-fca9-4453-87be-7653290ca0a2" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/9.png)
 
 Le fichier JAR représente l’artifact généré par Maven.
 
@@ -104,7 +103,7 @@ Le fichier JAR représente l’artifact généré par Maven.
 # 5. Configuration du fichier pom.xml
 
 Ajout de la configuration Nexus dans le fichier pom.xml :
-<img width="1163" height="91" alt="Capture d&#39;écran 2026-05-15 115835" src="https://github.com/user-attachments/assets/1eb8fab9-8e2e-4443-91c0-2d7d0a4c8f7c" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/10.png)
 
 ```bash
 <distributionManagement>
@@ -121,7 +120,7 @@ Cette configuration permet à Maven d’envoyer automatiquement les artifacts ve
 # 6. Configuration du fichier settings.xml
 
 Modification du fichier :
-<img width="1577" height="562" alt="Capture d’écran 2026-05-15 235053" src="https://github.com/user-attachments/assets/b74557b0-34aa-4865-90bc-d63e69b83bd3" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/11.png)
 
 ```bash
 ~/.m2/settings.xml
@@ -146,12 +145,12 @@ Commande utilisée :
 ```bash
 mvn clean deploy
 ```
-<img width="1575" height="581" alt="Capture d’écran 2026-05-15 235732" src="https://github.com/user-attachments/assets/b217e55a-d63d-4b62-8e43-93f7da84b0e3" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/12.png)
 
 Résultat :
 
 **BUILD SUCCESS**
-<img width="1584" height="339" alt="Capture d&#39;écran 2026-05-15 235849" src="https://github.com/user-attachments/assets/c899de2d-e624-4562-bb32-8b9f9f2dd149" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/13.png)
 
 L’artifact a été envoyé avec succès vers le repository Nexus.
 
@@ -173,7 +172,7 @@ maven-metadata.xml
 Cela confirme le bon fonctionnement du déploiement Maven vers Nexus.
 
 ### Capture — Artifact dans Nexus
-<img width="975" height="592" alt="Capture d&#39;écran 2026-05-15 152050" src="https://github.com/user-attachments/assets/e3eee7c4-c3cd-46a2-ac0a-12055b78a066" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/14.png)
 
 # 9. Test manuel du Hosted Repository
 
@@ -199,14 +198,14 @@ Cette méthode permet d’ajouter des artifacts sans utiliser Maven.
 
 ### Capture — Upload manuel dans Nexus
 
-<img width="1570" height="783" alt="Capture d’écran 2026-05-16 005016" src="https://github.com/user-attachments/assets/5fe49364-b3d4-4730-9ae6-38ad7f0c9796" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/15.png)
 
 ---
 
 # 10. Test du Proxy Repository
 
 J’ai aussi exploré le fonctionnement des repositories de type Proxy.
-<img width="1589" height="405" alt="Capture d&#39;écran 2026-05-16 005533" src="https://github.com/user-attachments/assets/fdd16346-8582-4ea3-817a-d09e38a5dd15" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/16.png)
 Un Proxy Repository permet à Nexus de récupérer et mettre en cache les dépendances provenant d’un repository distant comme Maven Central.
 
 Exemple :
@@ -226,7 +225,7 @@ Avantages :
 
 ### Capture — Proxy Repository
 
-<img width="1341" height="820" alt="Capture d&#39;écran 2026-05-16 010932" src="https://github.com/user-attachments/assets/9d26f906-2148-4cff-9d6b-a6cf3adeb5e2" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/17.png)
 
 
 ---
@@ -234,8 +233,7 @@ Avantages :
 # 11. Test du Group Repository
 
 Enfin, j’ai testé les Group Repositories.
-<img width="1363" height="408" alt="Capture d&#39;écran 2026-05-16 011406" src="https://github.com/user-attachments/assets/8fdb48b0-2554-4c02-852d-8c79fc1ecd30" />
-
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/18.png)
 
 Un Group Repository permet de regrouper plusieurs repositories dans une seule URL.
 
@@ -259,7 +257,7 @@ Le développeur peut utiliser une seule URL Maven au lieu de plusieurs repositor
 
 ### Capture — Group Repository
 
-<img width="1348" height="824" alt="Capture d&#39;écran 2026-05-16 011741" src="https://github.com/user-attachments/assets/6d959d30-30b1-4725-8375-db4d2cb7c4d3" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/19.png)
 
 
 ---
@@ -272,7 +270,7 @@ Le développeur peut utiliser une seule URL Maven au lieu de plusieurs repositor
 | Proxy | Cache des repositories distants |
 | Group | Regroupement de plusieurs repositories |
 
-<img width="1358" height="443" alt="Capture d&#39;écran 2026-05-16 012029" src="https://github.com/user-attachments/assets/4ef9fce6-30f6-4674-af1e-7bd9abec3e5e" />
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/20.png)
 
 ---
 

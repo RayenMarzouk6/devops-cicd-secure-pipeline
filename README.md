@@ -12,6 +12,8 @@ L'objectif de ce dossier est de mettre en place une plateforme d'intégration co
 | Fatma Bessad | Expert SonarQube |
 | Rayen Marzouk| Expert Nexus |
 
+![Capture Container Nexus](./docs/screenshot/semaine1/rayen_etudiantB/cicd.jpg)
+
 # Objectifs du Projet
 Le projet a pour but de :
 
